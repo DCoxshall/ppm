@@ -32,7 +32,7 @@ std::vector<uint8_t> read_data_from_file(std::ifstream& file) {
                                 std::istreambuf_iterator<char>());
 }
 
-void check_cmd_line_args(int argc, char* argv[]) {
+static void check_cmd_line_args(int argc, char* argv[]) {
     if (argc != 2) {
         throw std::runtime_error(
             "Incorrect number of command line arguments. Usage: ppm "
@@ -40,7 +40,7 @@ void check_cmd_line_args(int argc, char* argv[]) {
     }
 }
 
-std::ifstream open_file(std::string file_path_str) {
+static std::ifstream open_file(std::string file_path_str) {
     std::filesystem::path file_path = file_path_str;
     if (!std::filesystem::exists(file_path))
         throw std::runtime_error("File does not exist.");

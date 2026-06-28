@@ -12,8 +12,10 @@ class Scanner {
 
     void scan_number();
     void scan_magic_number();
+    void scan_blob();
 
     void skip_whitespace();
+    void skip_single_whitespace();
     void skip_to_next_line();
 
     bool at_end() {

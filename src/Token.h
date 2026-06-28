@@ -6,6 +6,7 @@ enum TokenType {
     Number,
     MagicNumber,
     EndOfFile,
+    Blob,
 };
 
 struct Token {
