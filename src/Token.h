@@ -11,7 +11,7 @@ enum TokenType {
 
 struct Token {
     TokenType type;
-    std::string lexeme;  // raw text, e.g. "P3", "255"
+    std::string lexeme;
 };
 
 void token_show(Token t);

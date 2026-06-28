@@ -11,14 +11,22 @@ class ImageData {
     size_t width;
     size_t height;
 
-    // Used for scaling down colours where the scale goes above 255.
-    uint16_t maxval;
-
    public:
-    ImageData(size_t width, size_t height, uint16_t maxval) {
+    ImageData(size_t width, size_t height, std::vector<Pixel> blob_data) {
         this->width = width;
         this->height = height;
-        this->pixels = std::vector<Pixel>();
-        this->maxval = maxval;
+        this->pixels = blob_data;
+    }
+
+    size_t get_width() const {
+        return width;
+    }
+
+    size_t get_height() const {
+        return height;
+    }
+
+    std::vector<Pixel> get_pixels() const {
+        return pixels;
     }
 };
