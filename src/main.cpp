@@ -58,7 +58,7 @@ static void show_image(const ImageData& img, std::string file_name) {
                                  std::string(SDL_GetError()));
     }
 
-    SDL_Window* window = SDL_CreateWindow(file_name.c_str(), img.get_height(),
+    SDL_Window* window = SDL_CreateWindow(file_name.c_str(), img.get_width(),
                                           img.get_height(), 0);
 
     if (!window) {
