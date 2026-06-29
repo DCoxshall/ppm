@@ -122,8 +122,37 @@ std::vector<Pixel> Parser::parse_blob(enum MagicNumberVariant magic,
 
 std::vector<Pixel> Parser::parse_binary_blob(size_t width, size_t height,
                                              uint16_t maxval) {
-    throw std::runtime_error("Binary blobs not supported.");
-    return std::vector<Pixel>();
+    std::vector<uint16_t> blob;
+    std::string raw = tokens[at].lexeme;
+
+    // Represents whether this binary blob is using 16 bits for each RGB
+    // component.
+    bool double_width_pixels = maxval > 255;
+
+    // Sanity check the size of the blob.
+    if ((double_width_pixels && (raw.size() != width * height * 3)) ||
+        (double_width_pixels && (raw.size() != width * height * 6)))
+        throw std::runtime_error("Invalid binary blob size.");
+
+    if (double_width_pixels) {
+        unsigned char first_half;
+        bool on_first_half = true;
+
+        for (unsigned char byte : raw) {
+            if (on_first_half) {
+                first_half = byte;
+            } else {
+                blob.push_back(static_cast<uint16_t>(first_half) << 8 + byte);
+            }
+            on_first_half = on_first_half ? false : true;
+        }
+    } else {
+        for (unsigned char byte : raw) {
+            blob.push_back(static_cast<uint16_t>(byte));
+        }
+    }
+
+    return parse_raw_blob(blob, width, height, maxval);
 }
 
 std::vector<Pixel> Parser::parse_ascii_blob(size_t width, size_t height,
